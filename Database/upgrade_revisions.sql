@@ -1,0 +1,57 @@
+-- Revision upgrade: registrar document request system
+-- Run on document_request AND registrar_db
+USE `document_request`;
+
+ALTER TABLE `tblrequest` MODIFY `ORNo` VARCHAR(6) NULL;
+ALTER TABLE `tblrequest`
+  ADD COLUMN IF NOT EXISTS `LastAction` VARCHAR(50) NULL,
+  ADD COLUMN IF NOT EXISTS `LastActionBy` INT NULL,
+  ADD COLUMN IF NOT EXISTS `LastActionDate` DATETIME NULL,
+  ADD COLUMN IF NOT EXISTS `UpdatedBy` INT NULL;
+ALTER TABLE `tblrequest`
+  ADD COLUMN IF NOT EXISTS `ReleasedBy` INT NULL,
+  ADD COLUMN IF NOT EXISTS `ReleasedDate` DATETIME NULL,
+  ADD COLUMN IF NOT EXISTS `CancelledBy` INT NULL,
+  ADD COLUMN IF NOT EXISTS `CancelledDate` DATETIME NULL;
+
+CREATE TABLE IF NOT EXISTS `tblaudittrail` (
+  `AuditID` INT AUTO_INCREMENT PRIMARY KEY,
+  `RequestNo` VARCHAR(20) NOT NULL,
+  `ActionDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `PerformedBy` VARCHAR(100) NOT NULL,
+  `UserRole` VARCHAR(30) NOT NULL,
+  `ActionTaken` VARCHAR(50) NOT NULL,
+  `OldValue` VARCHAR(255) NULL,
+  `NewValue` VARCHAR(255) NULL,
+  `Remarks` VARCHAR(255) NULL,
+  INDEX `idx_req` (`RequestNo`),
+  INDEX `idx_date` (`ActionDate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+USE `registrar_db`;
+
+ALTER TABLE `tblrequest` MODIFY `ORNo` VARCHAR(6) NULL;
+ALTER TABLE `tblrequest`
+  ADD COLUMN IF NOT EXISTS `LastAction` VARCHAR(50) NULL,
+  ADD COLUMN IF NOT EXISTS `LastActionBy` INT NULL,
+  ADD COLUMN IF NOT EXISTS `LastActionDate` DATETIME NULL,
+  ADD COLUMN IF NOT EXISTS `UpdatedBy` INT NULL;
+ALTER TABLE `tblrequest`
+  ADD COLUMN IF NOT EXISTS `ReleasedBy` INT NULL,
+  ADD COLUMN IF NOT EXISTS `ReleasedDate` DATETIME NULL,
+  ADD COLUMN IF NOT EXISTS `CancelledBy` INT NULL,
+  ADD COLUMN IF NOT EXISTS `CancelledDate` DATETIME NULL;
+
+CREATE TABLE IF NOT EXISTS `tblaudittrail` (
+  `AuditID` INT AUTO_INCREMENT PRIMARY KEY,
+  `RequestNo` VARCHAR(20) NOT NULL,
+  `ActionDate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `PerformedBy` VARCHAR(100) NOT NULL,
+  `UserRole` VARCHAR(30) NOT NULL,
+  `ActionTaken` VARCHAR(50) NOT NULL,
+  `OldValue` VARCHAR(255) NULL,
+  `NewValue` VARCHAR(255) NULL,
+  `Remarks` VARCHAR(255) NULL,
+  INDEX `idx_req` (`RequestNo`),
+  INDEX `idx_date` (`ActionDate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
