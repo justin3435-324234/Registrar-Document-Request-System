@@ -45,7 +45,7 @@ Public Class frmAuditTrail
             End Using
         Catch ex As Exception
             If ex.Message.Contains("doesn't exist") OrElse ex.Message.Contains("Unknown") Then
-                MessageBox.Show("Audit table not found. Run Database/upgrade_revisions.sql first.", "Setup Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBox.Show("Audit table not found. Re-import Database/database.sql in phpMyAdmin.", "Setup Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Else
                 MessageBox.Show("Failed to load audit trail: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
